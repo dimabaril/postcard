@@ -159,17 +159,32 @@ export default function Home() {
 
       {/* Форма */}
       <div className="w-full space-y-4 font-sans">
-        <select
-          value={selectedHolidayId}
-          onChange={handleHolidayChange}
-          className="w-full p-3 rounded  border border-white text-white focus:outline-none focus:ring-2 focus:ring-white"
-        >
-          {holidays.map((h) => (
-            <option key={h.id} value={h.id}>
-              {h.label}
-            </option>
-          ))}
-        </select>
+        <div className="w-full flex items-center p-3 rounded border border-white relative">
+          <select
+            value={selectedHolidayId}
+            onChange={handleHolidayChange}
+            className="w-full bg-transparent text-white focus:outline-none appearance-none cursor-pointer"
+          >
+            {holidays.map((holiday) => (
+              <option key={holiday.id} value={holiday.id}>
+                {holiday.label}
+              </option>
+            ))}
+          </select>
+          <svg
+            className="absolute right-3 w-5 h-5 text-white pointer-events-none"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 13l4 4L19 7"
+            />
+          </svg>
+        </div>
 
         {selectedHolidayId === 100 && (
           <input
@@ -243,7 +258,7 @@ export default function Home() {
           {/* Текст */}
           <div className="text-[#f9a8d4] uppercase tracking-wide">
             {toName && <div className="text-xl mb-2">{toName},</div>}
-            <div className="text-2xl leading-tight mb-2">ПОЗДРАВЛЯЮ ВАС</div>
+            <div className="text-2xl leading-tight mb-2">Поздравляю Вас</div>
             <div className="text-2xl leading-tight mb-6">
               {getFinalHolidayText()}
             </div>
