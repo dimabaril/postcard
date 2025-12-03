@@ -50,7 +50,12 @@ export default function Home() {
 
       // Конвертируем base64 в Blob для Web Share API
       const blob = await (await fetch(dataUrl)).blob();
-      const file = new File([blob], "postcard.jpg", { type: "image/jpeg" });
+
+      // const file = new File([blob], "postcard.jpg", { type: "image/jpeg" });
+      const timestamp = Date.now();
+      const file = new File([blob], `postcard_${timestamp}.jpg`, {
+        type: "image/jpeg",
+      });
 
       // Debug: check whether the browser can share files (after file is created)
       console.log(
@@ -60,8 +65,8 @@ export default function Home() {
           : "no canShare",
       );
 
-      // Даем браузеру время на обработку файла
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // // Даем браузеру время на обработку файла
+      // await new Promise((resolve) => setTimeout(resolve, 500));
 
       if (navigator.share) {
         await navigator.share({
