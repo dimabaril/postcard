@@ -5,7 +5,7 @@ import Image from "next/image";
 import { toJpeg } from "html-to-image";
 import { holidays, images } from "./data";
 // Icons
-import { Download, Send } from "lucide-react";
+// import { Download, Send } from "lucide-react";
 
 console.log("navigator.share:", !!navigator.share);
 console.log(
@@ -65,9 +65,6 @@ export default function Home() {
           : "no canShare",
       );
 
-      // // Даем браузеру время на обработку файла
-      // await new Promise((resolve) => setTimeout(resolve, 500));
-
       if (navigator.share) {
         await navigator.share({
           title: "Поздравление",
@@ -90,11 +87,11 @@ export default function Home() {
 
   // Шаг 1: Выбор картинки
   const renderStep1 = () => (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="font-miroslav text-3xl mb-6 text-center text-[#7FAECC]">
+    <div className="flex flex-col items-center">
+      <h1 className="font-miroslav text-4xl text-center text-[#7FAECC]">
         Выберите картинку <br /> для открытки
       </h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-3 gap-6">
         {images.map((img, idx) => (
           <div
             key={idx}
@@ -106,12 +103,6 @@ export default function Home() {
             }`}
             style={{ width: "100px", height: "100px" }}
           >
-            {/* В реальном проекте используйте next/image */}
-            {/* <img
-              src={img}
-              alt="choice"
-              className="object-cover w-full h-full"
-            /> */}
             <Image
               src={img}
               alt="choice"
@@ -125,7 +116,7 @@ export default function Home() {
       <button
         disabled={!selectedImage}
         onClick={() => setStep(2)}
-        className="cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-400 disabled:text-gray-300 text-xl py-3 px-12 rounded-full shadow-lg transition-transform active:scale-95"
+        className="font-miroslav cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-400 disabled:text-gray-300 text-3xl h-16 w-63 rounded-full shadow-lg transition-transform active:scale-95"
       >
         Дальше
       </button>
@@ -134,19 +125,14 @@ export default function Home() {
 
   // Шаг 2: Ввод данных
   const renderStep2 = () => (
-    <div className="flex flex-col items-center p-4 w-full max-w-md mx-auto">
-      <h1 className="font-miroslav text-2xl mb-6 text-center text-[#7FAECC]">
+    <div className="flex flex-col items-center w-full justify-between max-w-md mx-auto">
+      <h1 className="font-miroslav text-4xl text-center text-[#7FAECC]">
         Добавьте поздравление <br /> и адресата
       </h1>
 
       {/* Превью выбранной картинки (маленькое) */}
-      <div className="w-64 h-64 mb-6 border-4 border-white rounded-lg overflow-hidden relative bg-black/20">
+      <div className="w-full aspect-square border-4 border-white rounded-lg overflow-hidden relative bg-black/20">
         {selectedImage && (
-          // <img
-          //   src={selectedImage}
-          //   className="w-full h-full object-cover"
-          //   alt="selected"
-          // />
           <Image
             src={selectedImage}
             width={400}
@@ -159,7 +145,7 @@ export default function Home() {
 
       {/* Форма */}
       <div className="w-full space-y-4">
-        <div className="w-full flex items-center p-3 rounded border border-white relative">
+        <div className="w-full flex items-center rounded border border-white relative">
           <select
             value={selectedHolidayId}
             onChange={handleHolidayChange}
@@ -192,7 +178,7 @@ export default function Home() {
             placeholder="Введите название праздника"
             value={customHolidayText}
             onChange={(e) => setCustomHolidayText(e.target.value)}
-            className="w-full p-3 rounded border border-white text-white placeholder-white/50"
+            className="w-full rounded border border-white text-white placeholder-white/50"
           />
         )}
 
@@ -201,7 +187,7 @@ export default function Home() {
           placeholder="Имя получателя (необязательно)"
           value={toName}
           onChange={(e) => setToName(e.target.value)}
-          className="w-full p-3 rounded bg-[#7FAECC] border-none text-white placeholder-white/60"
+          className="w-full rounded bg-[#7FAECC] border-none text-white placeholder-white/60"
         />
 
         <input
@@ -209,13 +195,13 @@ export default function Home() {
           placeholder="Имя отправителя (необязательно)"
           value={fromName}
           onChange={(e) => setFromName(e.target.value)}
-          className="w-full p-3 rounded bg-[#7FAECC] border-none text-white placeholder-white/60"
+          className="w-full rounded bg-[#7FAECC] border-none text-white placeholder-white/60"
         />
       </div>
 
       <button
         onClick={() => setStep(3)}
-        className="mt-8 cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-400 disabled:text-gray-300 text-xl py-3 px-12 rounded-full shadow-lg transition-transform active:scale-95"
+        className="font-miroslav cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-400 disabled:text-gray-300 text-3xl h-16 w-63 rounded-full shadow-lg transition-transform active:scale-95"
       >
         Дальше
       </button>
@@ -224,20 +210,20 @@ export default function Home() {
 
   // Шаг 3: Просмотр и Отправка
   const renderStep3 = () => (
-    <div className="flex flex-col items-center p-4 w-full max-w-lg mx-auto">
-      <h1 className="font-miroslav text-3xl mb-4 text-center text-[#7FAECC]">
+    <div className="flex flex-col items-center w-full max-w-lg mx-auto">
+      <h1 className="font-miroslav text-4xl text-center text-[#7FAECC]">
         Отправьте <br /> поздравление
       </h1>
 
       {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (DOM узел, который мы будем скринить) */}
       <div
         ref={cardRef}
-        className="bg-[#22386F] p-6 w-full text-center relative border border-blue-900"
+        className="bg-[#22386F] w-full text-center relative border border-blue-900"
       >
         {/* Здесь можно добавить SVG-рамку узором как фон или border-image */}
-        <div className="border-2 border-white/50 p-4 h-full flex flex-col items-center">
+        <div className="border-2 border-white/50 h-full flex flex-col items-center">
           {/* Картинка */}
-          <div className="w-full aspect-square relative mb-6 border-4 border-white shadow-lg overflow-hidden">
+          <div className="w-full aspect-square relative border-4 border-white shadow-lg overflow-hidden">
             {selectedImage && (
               <img
                 src={selectedImage}
@@ -257,9 +243,9 @@ export default function Home() {
 
           {/* Текст */}
           <div className="text-[#f9a8d4] uppercase tracking-wide">
-            {toName && <div className="text-xl mb-2">{toName},</div>}
-            <div className="text-2xl leading-tight mb-2">Поздравляю Вас</div>
-            <div className="text-2xl leading-tight mb-6">
+            {toName && <div className="text-xl ">{toName},</div>}
+            <div className="text-2xl leading-tight">Поздравляю Вас</div>
+            <div className="text-2xl leading-tight">
               {getFinalHolidayText()}
             </div>
             {fromName && (
@@ -269,45 +255,18 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Кнопки шеринга */}
-      <div className="mt-8 w-full text-center">
-        <p className="mb-4 text-lg text-white ">Выберите способ отправки:</p>
-        <div className="flex justify-center gap-6">
-          {/* Кнопка Share API (универсальная для мобилок) */}
-          <button
-            onClick={handleShare}
-            className="cursor-pointer flex flex-col items-center gap-2"
-          >
-            <div className="w-14 h-14 rounded-full border border-[#D37F9A] flex items-center justify-center">
-              <Send className="text-[#D37F9A] w-6 h-6" />
-            </div>
-            <span className="text-sm text-[#D37F9A]">Отправить</span>
-          </button>
-
-          {/* Кнопка Скачать (для десктопа) */}
-          <button
-            onClick={handleShare}
-            className="cursor-pointer flex flex-col items-center gap-2"
-          >
-            <div className="w-14 h-14 rounded-full border border-[#D37F9A] flex items-center justify-center">
-              <Download className="text-[#D37F9A] w-6 h-6" />
-            </div>
-            <span className="text-sm text-[#D37F9A]">Скачать</span>
-          </button>
-        </div>
-
-        <button
-          onClick={() => setStep(1)}
-          className="mt-10 text-sm text-blue-300 underline"
-        >
-          Создать новую
-        </button>
-      </div>
+      {/* Кнопка шеринга */}
+      <button
+        onClick={handleShare}
+        className="font-miroslav cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-400 disabled:text-gray-300 text-3xl h-16 w-63 rounded-full shadow-lg transition-transform active:scale-95"
+      >
+        Отправить
+      </button>
     </div>
   );
 
   return (
-    <main className="min-h-screen py-8 bg-[#22386F]">
+    <main className="min-h-screen bg-[#22386F] px-9 py-12">
       {step === 1 && renderStep1()}
       {step === 2 && renderStep2()}
       {step === 3 && renderStep3()}
