@@ -9,8 +9,8 @@ import { Share2, Download, Send } from "lucide-react";
 
 console.log("navigator.share:", !!navigator.share);
 console.log(
-  "navigator.canShare(files):",
-  navigator.canShare ? navigator.canShare({ files: [file] }) : "no canShare",
+  "navigator.canShare available:",
+  typeof navigator.canShare === "function",
 );
 
 export default function Home() {
@@ -51,6 +51,14 @@ export default function Home() {
       // Конвертируем base64 в Blob для Web Share API
       const blob = await (await fetch(dataUrl)).blob();
       const file = new File([blob], "postcard.jpg", { type: "image/jpeg" });
+
+      // Debug: check whether the browser can share files (after file is created)
+      console.log(
+        "navigator.canShare(files):",
+        navigator.canShare
+          ? navigator.canShare({ files: [file] })
+          : "no canShare",
+      );
 
       if (navigator.share) {
         await navigator.share({
