@@ -60,6 +60,9 @@ export default function Home() {
           : "no canShare",
       );
 
+      // Даем браузеру время на обработку файла
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       if (navigator.share) {
         await navigator.share({
           title: "Поздравление",
