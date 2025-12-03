@@ -1,20 +1,29 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Open_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const openSans = Open_Sans({
+  subsets: ["cyrillic", "latin"],
+  weight: ["300", "400", "700"],
+  variable: "--font-open-sans",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin", "cyrillic"],
+const miroslav = localFont({
+  src: [
+    {
+      path: "./fonts/MiroslavRegular.ttf",
+      weight: "400", // or 'normal'
+      style: "normal",
+    },
+    {
+      path: "./fonts/MiroslavBold.ttf",
+      weight: "700", // or 'bold'
+      style: "normal",
+    },
+  ],
+  variable: "--font-miroslav",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -28,10 +37,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased`}
-      >
+    // <html lang="ru" className={miroslav.className}>
+    <html lang="ru">
+      <body className={`${openSans.variable} ${miroslav.variable} antialiased`}>
         {children}
       </body>
     </html>

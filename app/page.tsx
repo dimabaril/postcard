@@ -5,7 +5,7 @@ import Image from "next/image";
 import { toJpeg } from "html-to-image";
 import { holidays, images } from "./data";
 // Icons
-import { Share2, Download, Send } from "lucide-react";
+import { Download, Send } from "lucide-react";
 
 console.log("navigator.share:", !!navigator.share);
 console.log(
@@ -91,7 +91,7 @@ export default function Home() {
   // Шаг 1: Выбор картинки
   const renderStep1 = () => (
     <div className="flex flex-col items-center p-4">
-      <h1 className="text-3xl mb-6 text-center text-[#7FAECC]">
+      <h1 className="font-miroslav text-3xl mb-6 text-center text-[#7FAECC]">
         Выберите картинку <br /> для открытки
       </h1>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
@@ -135,7 +135,7 @@ export default function Home() {
   // Шаг 2: Ввод данных
   const renderStep2 = () => (
     <div className="flex flex-col items-center p-4 w-full max-w-md mx-auto">
-      <h1 className="text-2xl mb-6 text-center text-[#7FAECC]">
+      <h1 className="font-miroslav text-2xl mb-6 text-center text-[#7FAECC]">
         Добавьте поздравление <br /> и адресата
       </h1>
 
@@ -158,7 +158,7 @@ export default function Home() {
       </div>
 
       {/* Форма */}
-      <div className="w-full space-y-4 font-sans">
+      <div className="w-full space-y-4">
         <div className="w-full flex items-center p-3 rounded border border-white relative">
           <select
             value={selectedHolidayId}
@@ -225,7 +225,7 @@ export default function Home() {
   // Шаг 3: Просмотр и Отправка
   const renderStep3 = () => (
     <div className="flex flex-col items-center p-4 w-full max-w-lg mx-auto">
-      <h1 className="text-3xl mb-4 text-center text-[#7FAECC]">
+      <h1 className="font-miroslav text-3xl mb-4 text-center text-[#7FAECC]">
         Отправьте <br /> поздравление
       </h1>
 
