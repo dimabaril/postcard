@@ -224,18 +224,18 @@ export default function Home() {
           {/* Картинка */}
           <div className="w-full aspect-square relative mb-6 border-4 border-white shadow-lg overflow-hidden">
             {selectedImage && (
-              // <img
-              //   src={selectedImage}
-              //   className="w-full h-full object-cover"
-              //   alt="final"
-              // />
-              <Image
+              <img
                 src={selectedImage}
-                width={400}
-                height={400}
                 className="w-full h-full object-cover"
                 alt="final"
               />
+              // <Image
+              //   src={selectedImage}
+              //   width={400}
+              //   height={400}
+              //   className="w-full h-full object-cover"
+              //   alt="final"
+              // />
             )}
             {/* Можно наложить логотип 30 лет поверх картинки здесь */}
           </div>
