@@ -7,6 +7,12 @@ import { holidays, images } from "./data";
 // Icons
 import { Share2, Download, Send } from "lucide-react";
 
+console.log("navigator.share:", !!navigator.share);
+console.log(
+  "navigator.canShare(files):",
+  navigator.canShare ? navigator.canShare({ files: [file] }) : "no canShare",
+);
+
 export default function Home() {
   // --- State ---
   const [step, setStep] = useState(1);
@@ -180,7 +186,7 @@ export default function Home() {
         onClick={() => setStep(3)}
         className="mt-8 cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-400 disabled:text-gray-300 text-xl py-3 px-12 rounded-full shadow-lg transition-transform active:scale-95"
       >
-        ДАЛЬШЕ
+        Дальше
       </button>
     </div>
   );
