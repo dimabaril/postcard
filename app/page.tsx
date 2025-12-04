@@ -24,6 +24,9 @@ export default function Home() {
   const [fromName, setFromName] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
+  const MAX_HOLIDAY_LENGTH = 40;
+  const MAX_NAME_LENGTH = 40;
+
   // --- Logic ---
   const handleHolidayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedHolidayId(Number(e.target.value));
@@ -185,30 +188,60 @@ export default function Home() {
         </div>
 
         {selectedHolidayId === 100 && (
-          <input
-            type="text"
-            placeholder="Введите название праздника"
-            value={customHolidayText}
-            onChange={(e) => setCustomHolidayText(e.target.value)}
-            className="font-stretch-extra-condensed w-full h-12 px-4 rounded border border-white text-white text-2xl placeholder-white/50"
-          />
+          <div className="w-full relative">
+            <input
+              type="text"
+              placeholder="Введите название праздника"
+              value={customHolidayText}
+              onChange={(e) => setCustomHolidayText(e.target.value)}
+              maxLength={MAX_HOLIDAY_LENGTH}
+              className="font-stretch-extra-condensed w-full h-12 px-4 rounded border border-white text-white text-2xl placeholder-white/50"
+            />
+
+            {customHolidayText.length >= MAX_HOLIDAY_LENGTH && (
+              <div className="absolute left bottom text-xs text-white/50">
+                Достигнут лимит символов
+                {MAX_HOLIDAY_LENGTH}
+              </div>
+            )}
+          </div>
         )}
 
-        <input
-          type="text"
-          placeholder="Имя получателя (необязательно)"
-          value={toName}
-          onChange={(e) => setToName(e.target.value)}
-          className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
-        />
+        <div className="w-full relative">
+          <input
+            type="text"
+            placeholder="Имя получателя (необязательно)"
+            value={toName}
+            onChange={(e) => setToName(e.target.value)}
+            maxLength={MAX_NAME_LENGTH}
+            className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
+          />
 
-        <input
-          type="text"
-          placeholder="Имя отправителя (необязательно)"
-          value={fromName}
-          onChange={(e) => setFromName(e.target.value)}
-          className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
-        />
+          {toName.length >= MAX_NAME_LENGTH && (
+            <div className="absolute left bottom text-xs text-white/50">
+              Достигнут лимит символов
+              {MAX_NAME_LENGTH}
+            </div>
+          )}
+        </div>
+
+        <div className="w-full relative">
+          <input
+            type="text"
+            placeholder="Имя отправителя (необязательно)"
+            value={fromName}
+            onChange={(e) => setFromName(e.target.value)}
+            maxLength={MAX_NAME_LENGTH}
+            className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
+          />
+
+          {fromName.length >= MAX_NAME_LENGTH && (
+            <div className="absolute left bottom text-xs text-white/50">
+              Достигнут лимит символов
+              {MAX_NAME_LENGTH}
+            </div>
+          )}
+        </div>
       </div>
 
       <button
@@ -228,18 +261,16 @@ export default function Home() {
       </h1>
 
       {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (DOM узел, который мы будем скринить) */}
-      <div
-        // ref={cardRef} // Больше не нужен
-        className="bg-[#22386F] w-full text-center"
-      >
-        {/* Здесь можно добавить SVG-рамку узором как фон или border-image */}
+      <div className="bg-[#22386F] w-full text-center">
         <div className="border-2 border-white/70 flex flex-col items-center">
           {/* Картинка */}
           <div className="w-full aspect-square">
             {selectedImage && (
-              <img
+              <Image
                 src={selectedImage}
-                className="w-full aspect-square object-cover"
+                width={500}
+                height={500}
+                className="w-full h-full object-cover"
                 alt="final"
               />
             )}

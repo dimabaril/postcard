@@ -14,8 +14,6 @@ export async function GET(req: NextRequest) {
     const imagePath = searchParams.get("imageUrl");
     const toName = searchParams.get("toName");
     const fromName = searchParams.get("fromName");
-    // const toName = "Вася";
-    // const fromName = "Петя";
     const holidayText = searchParams.get("holidayText");
 
     if (!imagePath) {
@@ -52,7 +50,7 @@ export async function GET(req: NextRequest) {
               <div tw="text-[26px] leading-tight">{holidayText}</div>
               {fromName && (
                 <div tw="pt-2 w-full flex justify-center">
-                  <div tw="text-base text-gray-400 border-t border-gray-500 px-8 pt-1 inline-block">
+                  <div tw="text-base text-gray-400 border-t border-gray-400 px-5 pt-2 inline-block">
                     {fromName}
                   </div>
                 </div>
@@ -64,7 +62,7 @@ export async function GET(req: NextRequest) {
       {
         width: imageWidth,
         // Высота будет немного больше, чтобы вместить текст
-        height: imageHeight + 150,
+        height: imageHeight + 170,
         fonts: [
           {
             name: "Miroslav",

@@ -39,7 +39,7 @@ export const images = [
   },
   {
     main: "/images/rtu_2026_digital_cards-03.jpg",
-    preview: "/images/33.png",
+    preview: "/images/3.png",
   },
   {
     main: "/images/rtu_2026_digital_cards-04.jpg",
@@ -59,7 +59,7 @@ export const images = [
   },
   {
     main: "/images/rtu_2026_digital_cards-08.jpg",
-    preview: "/images/88.png",
+    preview: "/images/8.png",
   },
   {
     main: "/images/rtu_2026_digital_cards-09.jpg",
