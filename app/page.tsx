@@ -87,11 +87,14 @@ export default function Home() {
 
   // Шаг 1: Выбор картинки
   const renderStep1 = () => (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col gap-4 items-center w-full max-w-md mx-auto">
       <h1 className="font-miroslav text-4xl text-center text-[#7FAECC]">
-        Выберите картинку <br /> для открытки
+        Выберите картинку
+        <br />
+        для открытки
       </h1>
-      <div className="grid grid-cols-3 gap-6">
+      {/* <div className="grid grid-cols-3 gap-6"> */}
+      <div className="grid grid-cols-3 gap-3">
         {images.map((img, idx) => (
           <div
             key={idx}
@@ -101,14 +104,14 @@ export default function Home() {
                 ? "border-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
                 : "border-transparent"
             }`}
-            style={{ width: "100px", height: "100px" }}
+            // style={{ width: "100px", height: "100px" }}
           >
             <Image
               src={img}
               alt="choice"
               width={100}
               height={100}
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full scale-170"
             />
           </div>
         ))}
@@ -125,9 +128,10 @@ export default function Home() {
 
   // Шаг 2: Ввод данных
   const renderStep2 = () => (
-    <div className="flex flex-col items-center w-full justify-between max-w-md mx-auto">
+    <div className="flex flex-col gap-4 items-center w-full max-w-md mx-auto">
       <h1 className="font-miroslav text-4xl text-center text-[#7FAECC]">
-        Добавьте поздравление <br /> и адресата
+        Добавьте поздравление
+        <br />и адресата
       </h1>
 
       {/* Превью выбранной картинки (маленькое) */}
@@ -144,12 +148,12 @@ export default function Home() {
       </div>
 
       {/* Форма */}
-      <div className="w-full space-y-4">
+      <div className="w-full flex flex-col gap-4">
         <div className="w-full flex items-center rounded border border-white relative">
           <select
             value={selectedHolidayId}
             onChange={handleHolidayChange}
-            className="w-full bg-transparent text-white focus:outline-none appearance-none cursor-pointer"
+            className="font-stretch-extra-condensed w-full h-12 pl-4 pr-11 bg-transparent text-white text-2xl focus:outline-none appearance-none cursor-pointer"
           >
             {holidays.map((holiday) => (
               <option key={holiday.id} value={holiday.id}>
@@ -178,7 +182,7 @@ export default function Home() {
             placeholder="Введите название праздника"
             value={customHolidayText}
             onChange={(e) => setCustomHolidayText(e.target.value)}
-            className="w-full rounded border border-white text-white placeholder-white/50"
+            className="font-stretch-extra-condensed w-full h-12 px-4 rounded border border-white text-white text-2xl placeholder-white/50"
           />
         )}
 
@@ -187,7 +191,7 @@ export default function Home() {
           placeholder="Имя получателя (необязательно)"
           value={toName}
           onChange={(e) => setToName(e.target.value)}
-          className="w-full rounded bg-[#7FAECC] border-none text-white placeholder-white/60"
+          className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
         />
 
         <input
@@ -195,7 +199,7 @@ export default function Home() {
           placeholder="Имя отправителя (необязательно)"
           value={fromName}
           onChange={(e) => setFromName(e.target.value)}
-          className="w-full rounded bg-[#7FAECC] border-none text-white placeholder-white/60"
+          className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
         />
       </div>
 
@@ -210,24 +214,21 @@ export default function Home() {
 
   // Шаг 3: Просмотр и Отправка
   const renderStep3 = () => (
-    <div className="flex flex-col items-center w-full max-w-lg mx-auto">
+    <div className="flex flex-col gap-4 items-center w-full max-w-md mx-auto">
       <h1 className="font-miroslav text-4xl text-center text-[#7FAECC]">
         Отправьте <br /> поздравление
       </h1>
 
       {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (DOM узел, который мы будем скринить) */}
-      <div
-        ref={cardRef}
-        className="bg-[#22386F] w-full text-center relative border border-blue-900"
-      >
+      <div ref={cardRef} className="bg-[#22386F] w-full text-center">
         {/* Здесь можно добавить SVG-рамку узором как фон или border-image */}
-        <div className="border-2 border-white/50 h-full flex flex-col items-center">
+        <div className="border-2 border-white/70 flex flex-col items-center">
           {/* Картинка */}
-          <div className="w-full aspect-square relative border-4 border-white shadow-lg overflow-hidden">
+          <div className="w-full aspect-square">
             {selectedImage && (
               <img
                 src={selectedImage}
-                className="w-full h-full object-cover"
+                className="w-full aspect-square object-cover"
                 alt="final"
               />
               // <Image
@@ -242,14 +243,24 @@ export default function Home() {
           </div>
 
           {/* Текст */}
-          <div className="text-[#f9a8d4] uppercase tracking-wide">
-            {toName && <div className="text-xl ">{toName},</div>}
-            <div className="text-2xl leading-tight">Поздравляю Вас</div>
-            <div className="text-2xl leading-tight">
+          <div className="text-[#D37F9A] uppercase tracking-wide pt-3 pb-4">
+            {toName && (
+              <div className="font-miroslav text-2xl leading-tight">
+                {toName},
+              </div>
+            )}
+            <div className="font-miroslav text-2xl leading-tight">
+              Поздравляю Вас
+            </div>
+            <div className="font-miroslav text-2xl leading-tight">
               {getFinalHolidayText()}
             </div>
             {fromName && (
-              <div className="text-md text-gray-400 ">{fromName}</div>
+              <div className="pt-2">
+                <div className="text-md text-gray-400 border-t border-gray-400 px-5 pt-2 inline-block">
+                  {fromName}
+                </div>
+              </div>
             )}
           </div>
         </div>
@@ -266,7 +277,8 @@ export default function Home() {
   );
 
   return (
-    <main className="min-h-screen bg-[#22386F] px-9 py-12">
+    // <main className="min-h-dvh flex flex-col bg-[#22386F] px-9 py-12">
+    <main className="min-h-dvh bg-[#22386F] px-6 py-6">
       {step === 1 && renderStep1()}
       {step === 2 && renderStep2()}
       {step === 3 && renderStep3()}
