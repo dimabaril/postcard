@@ -1,16 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { holidays, images } from "./data";
-// Icons
-// import { Download, Send } from "lucide-react";
-
-console.log("navigator.share:", !!navigator.share);
-console.log(
-  "navigator.canShare available:",
-  typeof navigator.canShare === "function",
-);
+import { toJpeg } from "html-to-image";
 
 export default function Home() {
   // --- State ---
@@ -23,6 +16,7 @@ export default function Home() {
   const [toName, setToName] = useState("");
   const [fromName, setFromName] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const MAX_HOLIDAY_LENGTH = 40;
   const MAX_NAME_LENGTH = 40;
@@ -40,38 +34,31 @@ export default function Home() {
 
   // Функция скачивания/шаринга
   const handleShare = async () => {
-    if (!selectedImage) return;
+    if (!cardRef.current) {
+      alert("Не удалось найти элемент открытки. Попробуйте еще раз.");
+      return;
+    }
 
     setIsGenerating(true);
 
     try {
-      // Формируем URL для нашего API-генератора
-      const params = new URLSearchParams();
-      params.set("imageUrl", selectedImage);
-      params.set("holidayText", getFinalHolidayText());
-      if (toName) params.set("toName", toName);
-      if (fromName) params.set("fromName", fromName);
+      const dataUrl = await toJpeg(cardRef.current, {
+        quality: 0.9,
+        backgroundColor: "#22386F",
+        pixelRatio: 2,
+      });
 
-      const cardUrl = `/api/generate-card?${params.toString()}`;
+      const blob = await (await fetch(dataUrl)).blob();
 
-      // Получаем сгенерированную картинку с сервера
-      const response = await fetch(cardUrl);
-      if (!response.ok) {
-        throw new Error(`Ошибка сервера: ${response.statusText}`);
+      if (!blob) {
+        throw new Error("Не удалось создать Blob из Canvas");
       }
 
-      const blob = await response.blob();
       const timestamp = Date.now();
       const file = new File([blob], `postcard_${timestamp}.jpg`, {
         type: "image/jpeg",
       });
 
-      console.log(
-        "navigator.canShare imjage file:",
-        navigator.canShare && navigator.canShare({ files: [file] }),
-      );
-
-      // Пытаемся поделиться через Web Share API
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: "Поздравление",
@@ -79,12 +66,11 @@ export default function Home() {
           files: [file],
         });
       } else {
-        // Фоллбэк для десктопа или если шаринг не удался - просто скачивание
         const link = document.createElement("a");
         link.download = `postcard_${timestamp}.jpg`;
         link.href = URL.createObjectURL(blob);
         link.click();
-        URL.revokeObjectURL(link.href); // Очищаем память
+        URL.revokeObjectURL(link.href);
       }
     } catch (err) {
       console.error("Ошибка при генерации или отправке открытки:", err);
@@ -261,8 +247,11 @@ export default function Home() {
       </h1>
 
       {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (DOM узел, который мы будем скринить) */}
-      <div className="bg-[#22386F] w-full text-center">
-        <div className="border-2 border-white/70 flex flex-col items-center">
+      <div ref={cardRef} className="bg-[#22386F] w-full text-center">
+        <div
+          className="border-2 flex flex-col items-center"
+          style={{ borderColor: "rgba(255, 255, 255, 0.7)" }}
+        >
           {/* Картинка */}
           <div className="w-full aspect-square">
             {selectedImage && (
@@ -292,7 +281,10 @@ export default function Home() {
             </div>
             {fromName && (
               <div className="pt-2">
-                <div className="text-md text-gray-400 border-t border-gray-400 px-5 pt-2 inline-block">
+                <div
+                  className="text-md border-t px-5 pt-2 inline-block"
+                  style={{ color: "#9ca3af", borderColor: "#9ca3af" }}
+                >
                   {fromName}
                 </div>
               </div>
