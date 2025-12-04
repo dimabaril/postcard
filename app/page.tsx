@@ -220,15 +220,15 @@ export default function Home() {
       </h1>
 
       {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (DOM узел, который мы будем скринить) */}
-      <div ref={cardRef} className="bg-[#22386F] w-full text-center">
+      <div ref={cardRef} className="bg-[#22386F] w-full text-center relative">
         {/* Здесь можно добавить SVG-рамку узором как фон или border-image */}
         <div className="border-2 border-white/70 flex flex-col items-center">
           {/* Картинка */}
-          <div className="w-full aspect-square">
+          <div className="w-full aspect-square relative overflow-hidden">
             {selectedImage && (
               <img
                 src={selectedImage}
-                className="w-full aspect-square object-cover"
+                className="w-full h-full object-cover"
                 alt="final"
               />
               // <Image
