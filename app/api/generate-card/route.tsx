@@ -14,6 +14,8 @@ export async function GET(req: NextRequest) {
     const imagePath = searchParams.get("imageUrl");
     const toName = searchParams.get("toName");
     const fromName = searchParams.get("fromName");
+    // const toName = "Вася";
+    // const fromName = "Петя";
     const holidayText = searchParams.get("holidayText");
 
     if (!imagePath) {
@@ -45,7 +47,7 @@ export async function GET(req: NextRequest) {
               tw="text-[#D37F9A] uppercase tracking-wide pt-3 pb-4 flex flex-col items-center"
               style={{ fontFamily: '"Miroslav"' }}
             >
-              {toName && <div tw="text-[26px] leading-tight">{toName},</div>}
+              {toName && <div tw="text-[26px] leading-tight">{toName}</div>}
               <div tw="text-[26px] leading-tight">Поздравляю Вас</div>
               <div tw="text-[26px] leading-tight">{holidayText}</div>
               {fromName && (

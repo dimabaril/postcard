@@ -1,42 +1,4 @@
 export const holidays = [
-  // { id: 1, label: "С Новым Годом!" },
-  // { id: 2, label: "С Днем Машиностроителя!" },
-  // { id: 3, label: "С Днем Шахтера!" },
-  // { id: 4, label: "С 8 Марта!" },
-  // { id: 5, label: "С 23 Февраля!" },
-  // { id: 6, label: "С Днем Рождения!" },
-  // { id: 7, label: "С Новым Годом!" },
-  // { id: 8, label: "С Днем Машиностроителя!" },
-  // { id: 9, label: "С Днем Шахтера!" },
-  // { id: 10, label: "С 8 Марта!" },
-  // { id: 11, label: "С 23 Февраля!" },
-  // { id: 12, label: "С Днем Рождения!" },
-
-  // С Рождеством!
-  // С Днем российской науки!
-  // С Днем транспортной полиции!
-  // С Днем мецената и благотворителя!
-  // С праздником весны и труда!
-  // С Днем Победы!
-  // С Днем рождения РТУ!
-  // С Днем пограничника!
-  // С Днем славянской письменности и культуры!
-  // С Днем эколога!
-  // С Днем моряка!
-  // С Днем кораблестроителя!
-  // С Днем работников морского и речного флота!
-  // С Днем металлурга!
-  // С Днем железнодорожника!
-  // С Днем шахтера!
-  // С Днем работника транспорта!
-  // С Днем машиностроителя!
-  // С Днем учителя!
-  // С Днем таможенника!
-  // С Днем добровольца!
-  // С Днем героев Отечества!
-  // С Днем энергетика!
-  // С Новым Годом!
-
   { id: 1, label: "С Рождеством!" },
   { id: 2, label: "С Днем российской науки!" },
   { id: 3, label: "С Днем транспортной полиции!" },
@@ -67,16 +29,52 @@ export const holidays = [
 
 // Здесь должны быть пути к вашим 12 картинкам в папке public/images
 export const images = [
-  "/images/rtu_2026_digital_cards-01.jpg",
-  "/images/rtu_2026_digital_cards-02.jpg",
-  "/images/rtu_2026_digital_cards-03.jpg",
-  "/images/rtu_2026_digital_cards-04.jpg",
-  "/images/rtu_2026_digital_cards-05.jpg",
-  "/images/rtu_2026_digital_cards-06.jpg",
-  "/images/rtu_2026_digital_cards-07.jpg",
-  "/images/rtu_2026_digital_cards-08.jpg",
-  "/images/rtu_2026_digital_cards-09.jpg",
-  "/images/rtu_2026_digital_cards-10.jpg",
-  "/images/rtu_2026_digital_cards-11.jpg",
-  "/images/rtu_2026_digital_cards-12.jpg",
+  {
+    main: "/images/rtu_2026_digital_cards-01.jpg",
+    preview: "/images/1.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-02.jpg",
+    preview: "/images/2.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-03.jpg",
+    preview: "/images/33.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-04.jpg",
+    preview: "/images/4.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-05.jpg",
+    preview: "/images/5.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-06.jpg",
+    preview: "/images/6.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-07.jpg",
+    preview: "/images/7.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-08.jpg",
+    preview: "/images/88.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-09.jpg",
+    preview: "/images/9.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-10.jpg",
+    preview: "/images/10.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-11.jpg",
+    preview: "/images/11.png",
+  },
+  {
+    main: "/images/rtu_2026_digital_cards-12.jpg",
+    preview: "/images/12.png",
+  },
 ];

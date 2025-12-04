@@ -65,7 +65,7 @@ export default function Home() {
 
       console.log(
         "navigator.canShare imjage file:",
-        navigator.canShare({ files: [file] }),
+        navigator.canShare && navigator.canShare({ files: [file] }),
       );
 
       // Пытаемся поделиться через Web Share API
@@ -106,20 +106,20 @@ export default function Home() {
         {images.map((img, idx) => (
           <div
             key={idx}
-            onClick={() => setSelectedImage(img)}
+            onClick={() => setSelectedImage(img.main)}
             className={`cursor-pointer rounded-xl overflow-hidden border-4 transition-all relative ${
-              selectedImage === img
+              selectedImage === img.main
                 ? "border-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
                 : "border-transparent"
             }`}
             // style={{ width: "100px", height: "100px" }}
           >
             <Image
-              src={img}
+              src={img.preview}
               alt="choice"
               width={100}
               height={100}
-              className="object-cover w-full h-full scale-170"
+              className="object-cover w-full h-full"
             />
           </div>
         ))}
