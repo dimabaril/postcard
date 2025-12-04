@@ -63,6 +63,11 @@ export default function Home() {
         type: "image/jpeg",
       });
 
+      console.log(
+        "navigator.canShare imjage file:",
+        navigator.canShare({ files: [file] }),
+      );
+
       // Пытаемся поделиться через Web Share API
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
