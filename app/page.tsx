@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { toJpeg } from "html-to-image";
 import { holidays, images } from "./data";
 // Icons
 // import { Download, Send } from "lucide-react";
@@ -23,8 +22,7 @@ export default function Home() {
   const [customHolidayText, setCustomHolidayText] = useState("");
   const [toName, setToName] = useState("");
   const [fromName, setFromName] = useState("");
-
-  const cardRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   // --- Logic ---
   const handleHolidayChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -39,47 +37,52 @@ export default function Home() {
 
   // Функция скачивания/шаринга
   const handleShare = async () => {
-    if (cardRef.current === null) return;
+    if (!selectedImage) return;
+
+    setIsGenerating(true);
 
     try {
-      // Генерируем картинку из HTML
-      const dataUrl = await toJpeg(cardRef.current, {
-        quality: 0.95,
-        // backgroundColor: "#22386F",
-      });
+      // Формируем URL для нашего API-генератора
+      const params = new URLSearchParams();
+      params.set("imageUrl", selectedImage);
+      params.set("holidayText", getFinalHolidayText());
+      if (toName) params.set("toName", toName);
+      if (fromName) params.set("fromName", fromName);
 
-      // Конвертируем base64 в Blob для Web Share API
-      const blob = await (await fetch(dataUrl)).blob();
+      const cardUrl = `/api/generate-card?${params.toString()}`;
 
-      // const file = new File([blob], "postcard.jpg", { type: "image/jpeg" });
+      // Получаем сгенерированную картинку с сервера
+      const response = await fetch(cardUrl);
+      if (!response.ok) {
+        throw new Error(`Ошибка сервера: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
       const timestamp = Date.now();
       const file = new File([blob], `postcard_${timestamp}.jpg`, {
         type: "image/jpeg",
       });
 
-      // Debug: check whether the browser can share files (after file is created)
-      console.log(
-        "navigator.canShare(files):",
-        navigator.canShare
-          ? navigator.canShare({ files: [file] })
-          : "no canShare",
-      );
-
-      if (navigator.share) {
+      // Пытаемся поделиться через Web Share API
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: "Поздравление",
           text: "Вам открытка!",
           files: [file],
         });
       } else {
-        // Фоллбэк для десктопа - просто скачивание
+        // Фоллбэк для десктопа или если шаринг не удался - просто скачивание
         const link = document.createElement("a");
-        link.download = "postcard.jpg";
-        link.href = dataUrl;
+        link.download = `postcard_${timestamp}.jpg`;
+        link.href = URL.createObjectURL(blob);
         link.click();
+        URL.revokeObjectURL(link.href); // Очищаем память
       }
     } catch (err) {
-      console.error("Ошибка при создании картинки", err);
+      console.error("Ошибка при генерации или отправке открытки:", err);
+      alert("Не удалось создать открытку. Попробуйте еще раз.");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -220,7 +223,10 @@ export default function Home() {
       </h1>
 
       {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (DOM узел, который мы будем скринить) */}
-      <div ref={cardRef} className="bg-[#22386F] w-full text-center">
+      <div
+        // ref={cardRef} // Больше не нужен
+        className="bg-[#22386F] w-full text-center"
+      >
         {/* Здесь можно добавить SVG-рамку узором как фон или border-image */}
         <div className="border-2 border-white/70 flex flex-col items-center">
           {/* Картинка */}
@@ -231,13 +237,6 @@ export default function Home() {
                 className="w-full aspect-square object-cover"
                 alt="final"
               />
-              // <Image
-              //   src={selectedImage}
-              //   width={400}
-              //   height={400}
-              //   className="w-full h-full object-cover"
-              //   alt="final"
-              // />
             )}
             {/* Можно наложить логотип 30 лет поверх картинки здесь */}
           </div>
@@ -269,9 +268,10 @@ export default function Home() {
       {/* Кнопка шеринга */}
       <button
         onClick={handleShare}
-        className="font-miroslav cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-400 disabled:text-gray-300 text-3xl h-16 w-63 rounded-full shadow-lg transition-transform active:scale-95"
+        disabled={isGenerating}
+        className="font-miroslav cursor-pointer bg-[#D37F9A] text-white disabled:bg-gray-600 disabled:cursor-wait text-3xl h-16 w-63 rounded-full shadow-lg transition-transform active:scale-95"
       >
-        Отправить
+        {isGenerating ? "Создание..." : "Отправить"}
       </button>
     </div>
   );
