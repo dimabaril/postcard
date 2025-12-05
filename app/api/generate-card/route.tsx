@@ -1,8 +1,17 @@
 import React from "react";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
-import { join } from "path";
 import * as fs from "fs/promises";
+import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "../../constants";
+import { CardTemplate, CARD_IMAGE_CLASS } from "../../components/CardTemplate";
+
+// Cache fonts between invocations to avoid reading from disk on every request
+const miroslavFontPromise = fs.readFile(
+  new URL("../../fonts/MiroslavRegular.ttf", import.meta.url),
+);
+const openSansFontPromise = fs.readFile(
+  new URL("../../fonts/OpenSans-Regular.ttf", import.meta.url),
+);
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,92 +19,82 @@ export async function GET(req: NextRequest) {
 
     // Получаем параметры из URL
     const imagePath = searchParams.get("imageUrl");
-    const toName = searchParams.get("toName") || "";
-    const fromName = searchParams.get("fromName") || "";
-    const holidayText = searchParams.get("holidayText") || "";
+    const toName = (searchParams.get("toName") || "").slice(0, MAX_NAME_LENGTH);
+    const fromName = (searchParams.get("fromName") || "").slice(
+      0,
+      MAX_NAME_LENGTH,
+    );
+    const holidayText = (searchParams.get("holidayText") || "").slice(
+      0,
+      MAX_HOLIDAY_LENGTH,
+    );
 
     if (!imagePath) {
       return new Response("Image URL is required", { status: 400 });
     }
 
+    // Разрешаем только локальные картинки из /images/
+    if (!imagePath.startsWith("/images/")) {
+      return new Response("Invalid image path", { status: 400 });
+    }
+
     // Конструируем абсолютный URL для изображения
     const imageUrl = new URL(imagePath, req.nextUrl.origin).toString();
-
-    // Читаем файл Miroslav из файловой системы
-    const miroslavFontPath = join(
-      process.cwd(),
-      "app",
-      "fonts",
-      "MiroslavRegular.ttf",
-    );
-    const openSansFontPath = join(
-      process.cwd(),
-      "app",
-      "fonts",
-      "OpenSans-Regular.ttf",
-    );
-
-    const miroslavFontData = await fs.readFile(miroslavFontPath);
-    const openSansFontData = await fs.readFile(openSansFontPath);
+    const [miroslavFontData, openSansFontData] = await Promise.all([
+      miroslavFontPromise,
+      openSansFontPromise,
+    ]);
 
     const imageWidth = 500;
     const imageHeight = 500;
+    const linesEstimate =
+      (toName ? 1 : 0) +
+      1 +
+      Math.max(1, Math.ceil(holidayText.length / 18)) +
+      (fromName ? 2 : 0);
+    const textHeight = linesEstimate * 30 + 40; // rough line height + paddings
+    const cardHeight = imageHeight + textHeight;
+
+    const card = (
+      <CardTemplate
+        mode="og"
+        toName={toName || undefined}
+        fromName={fromName || undefined}
+        holidayText={holidayText}
+        imageHeight={imageHeight}
+        imageNode={
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={imageUrl} alt="" tw={CARD_IMAGE_CLASS} />
+        }
+      />
+    );
 
     // Используем ImageResponse для генерации изображения на сервере
-    return new ImageResponse(
-      (
-        <div tw="flex bg-[#22386F] text-center">
-          <div tw="flex flex-col items-center w-full border-2 border-white/70">
-            {/* Картинка */}
-            <div
-              tw={`w-full h-[${imageHeight}px] flex items-center justify-center`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={imageUrl} alt="" tw="w-full h-full object-cover" />
-            </div>
-
-            {/* Текст */}
-            <div
-              tw="text-[#D37F9A] uppercase pt-3 pb-4 flex flex-col items-center w-full"
-              style={{ fontFamily: "Miroslav" }}
-            >
-              {toName && <div tw="text-2xl flex">{toName},</div>}
-              <div tw="text-2xl">Поздравляю Вас</div>
-              <div tw="text-2xl">{holidayText}</div>
-              {fromName && (
-                <div tw="pt-2 w-full flex justify-center">
-                  <div
-                    tw="text-base text-gray-400 border-t border-gray-400 px-5 pt-2 inline-block"
-                    style={{ fontFamily: "OpenSans" }}
-                  >
-                    {fromName}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      ),
-      {
-        width: imageWidth,
-        height: imageHeight + 170,
-        fonts: [
-          {
-            name: "Miroslav",
-            data: miroslavFontData,
-            style: "normal",
-          },
-          {
-            name: "OpenSans",
-            data: openSansFontData,
-            style: "normal",
-          },
-        ],
+    return new ImageResponse(card, {
+      width: imageWidth,
+      height: cardHeight,
+      headers: {
+        "cache-control": "no-store",
       },
-    );
+      fonts: [
+        {
+          name: "font-miroslav",
+          data: miroslavFontData,
+          style: "normal",
+        },
+        {
+          name: "font-open-sans",
+          data: openSansFontData,
+          style: "normal",
+        },
+      ],
+    });
   } catch (e: Error | unknown) {
     const errorMessage = e instanceof Error ? e.message : "Unknown error";
-    console.error("Failed to generate image:", errorMessage);
+    console.error("Failed to generate image:", {
+      message: errorMessage,
+      url: req.url,
+    });
     return new Response("Failed to generate image", { status: 500 });
   }
 }
