@@ -270,24 +270,15 @@ export default function Home() {
           </div>
 
           {/* Текст */}
-          <div className="text-[#D37F9A] uppercase tracking-wide pt-3 pb-4">
-            {toName && (
-              <div className="font-miroslav text-2xl leading-tight">
-                {toName},
-              </div>
-            )}
-            <div className="font-miroslav text-2xl leading-tight">
-              Поздравляю Вас
-            </div>
-            <div className="font-miroslav text-2xl leading-tight">
+          <div className="text-[#D37F9A] uppercase pt-3 pb-4">
+            {toName && <div className="font-miroslav text-2xl">{toName},</div>}
+            <div className="font-miroslav text-2xl">Поздравляю Вас</div>
+            <div className="font-miroslav text-2xl">
               {getFinalHolidayText()}
             </div>
             {fromName && (
               <div className="pt-2">
-                <div
-                  className="text-md border-t px-5 pt-2 inline-block"
-                  style={{ color: "#9ca3af", borderColor: "#9ca3af" }}
-                >
+                <div className="text-md border-t px-5 pt-2 inline-block  font-open-sans text-[#9ca3af] border-[#9ca3af]">
                   {fromName}
                 </div>
               </div>

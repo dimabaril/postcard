@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
     // Используем ImageResponse для генерации изображения на сервере
     return new ImageResponse(
       (
-        <div tw="flex w-full h-full bg-[#22386F] text-center">
+        <div tw="flex bg-[#22386F] text-center">
           <div tw="flex flex-col items-center w-full border-2 border-white/70">
             {/* Картинка */}
             <div
@@ -56,14 +56,12 @@ export async function GET(req: NextRequest) {
 
             {/* Текст */}
             <div
-              tw="text-[#D37F9A] uppercase tracking-wide pt-3 pb-4 flex flex-col items-center w-full"
+              tw="text-[#D37F9A] uppercase pt-3 pb-4 flex flex-col items-center w-full"
               style={{ fontFamily: "Miroslav" }}
             >
-              {toName && (
-                <div tw="text-[26px] leading-tight flex">{toName},</div>
-              )}
-              <div tw="text-[26px] leading-tight flex">Поздравляю Вас</div>
-              <div tw="text-[26px] leading-tight flex">{holidayText}</div>
+              {toName && <div tw="text-2xl flex">{toName},</div>}
+              <div tw="text-2xl">Поздравляю Вас</div>
+              <div tw="text-2xl">{holidayText}</div>
               {fromName && (
                 <div tw="pt-2 w-full flex justify-center">
                   <div
