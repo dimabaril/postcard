@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-open-sans);
+  --font-open-sans: var(--font-open-sans);
+  --font-open-sans-condensed: var(--font-open-sans-condensed);
   --font-miroslav: var(--font-miroslav);
 }

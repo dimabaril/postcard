@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { holidays, images } from "./data";
-import { toJpeg } from "html-to-image";
 
 export default function Home() {
   // --- State ---
@@ -16,7 +15,6 @@ export default function Home() {
   const [toName, setToName] = useState("");
   const [fromName, setFromName] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const cardRef = useRef<HTMLDivElement>(null);
 
   const MAX_HOLIDAY_LENGTH = 40;
   const MAX_NAME_LENGTH = 40;
@@ -32,26 +30,30 @@ export default function Home() {
     return holiday ? holiday.label : "";
   };
 
-  // Функция скачивания/шаринга
+  // Функция скачивания/шаринга с использованием серверной генерации
   const handleShare = async () => {
-    if (!cardRef.current) {
-      alert("Не удалось найти элемент открытки. Попробуйте еще раз.");
-      return;
-    }
-
     setIsGenerating(true);
 
     try {
-      const dataUrl = await toJpeg(cardRef.current, {
-        quality: 0.9,
-        backgroundColor: "#22386F",
-        pixelRatio: 2,
+      // Формируем параметры для API
+      const params = new URLSearchParams({
+        imageUrl: selectedImage || "",
+        toName: toName,
+        fromName: fromName,
+        holidayText: getFinalHolidayText(),
       });
 
-      const blob = await (await fetch(dataUrl)).blob();
+      // Получаем сгенерированное изображение с сервера
+      const response = await fetch(`/api/generate-card?${params}`);
+
+      if (!response.ok) {
+        throw new Error(`API ошибка: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
 
       if (!blob) {
-        throw new Error("Не удалось создать Blob из Canvas");
+        throw new Error("Не удалось создать Blob из изображения");
       }
 
       const timestamp = Date.now();
@@ -150,7 +152,7 @@ export default function Home() {
           <select
             value={selectedHolidayId}
             onChange={handleHolidayChange}
-            className="font-stretch-extra-condensed w-full h-12 pl-4 pr-11 bg-transparent text-white text-2xl focus:outline-none appearance-none cursor-pointer"
+            className="font-open-sans-condensed w-full h-12 pl-4 pr-11 bg-transparent text-white text-2xl focus:outline-none appearance-none cursor-pointer"
           >
             {holidays.map((holiday) => (
               <option key={holiday.id} value={holiday.id}>
@@ -181,7 +183,7 @@ export default function Home() {
               value={customHolidayText}
               onChange={(e) => setCustomHolidayText(e.target.value)}
               maxLength={MAX_HOLIDAY_LENGTH}
-              className="font-stretch-extra-condensed w-full h-12 px-4 rounded border border-white text-white text-2xl placeholder-white/50"
+              className="font-open-sans-condensed w-full h-12 px-4 rounded border border-white text-white text-2xl placeholder-white/50"
             />
 
             {customHolidayText.length >= MAX_HOLIDAY_LENGTH && (
@@ -200,7 +202,7 @@ export default function Home() {
             value={toName}
             onChange={(e) => setToName(e.target.value)}
             maxLength={MAX_NAME_LENGTH}
-            className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
+            className="font-open-sans-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
           />
 
           {toName.length >= MAX_NAME_LENGTH && (
@@ -218,7 +220,7 @@ export default function Home() {
             value={fromName}
             onChange={(e) => setFromName(e.target.value)}
             maxLength={MAX_NAME_LENGTH}
-            className="font-stretch-extra-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
+            className="font-open-sans-condensed w-full h-12 px-4 rounded bg-[#7FAECC] border-none text-white text-2xl placeholder-white/60"
           />
 
           {fromName.length >= MAX_NAME_LENGTH && (
@@ -246,8 +248,8 @@ export default function Home() {
         Отправьте <br /> поздравление
       </h1>
 
-      {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (DOM узел, который мы будем скринить) */}
-      <div ref={cardRef} className="bg-[#22386F] w-full text-center">
+      {/* РЕЗУЛЬТИРУЮЩАЯ ОТКРЫТКА (для отображения) */}
+      <div className="bg-[#22386F] w-full text-center">
         <div
           className="border-2 flex flex-col items-center"
           style={{ borderColor: "rgba(255, 255, 255, 0.7)" }}
@@ -261,6 +263,7 @@ export default function Home() {
                 height={500}
                 className="w-full h-full object-cover"
                 alt="final"
+                priority
               />
             )}
             {/* Можно наложить логотип 30 лет поверх картинки здесь */}

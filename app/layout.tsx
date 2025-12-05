@@ -1,12 +1,36 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+// import { Open_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const openSans = Open_Sans({
-  subsets: ["cyrillic", "latin"],
-  display: "swap",
+// const openSans = Open_Sans({
+//   subsets: ["cyrillic", "latin"],
+//   display: "swap",
+//   variable: "--font-open-sans",
+// });
+
+const openSans = localFont({
+  src: [
+    {
+      path: "./fonts/OpenSans-Regular.ttf",
+      weight: "400", // or 'normal'
+      style: "normal",
+    },
+  ],
   variable: "--font-open-sans",
+  display: "swap",
+});
+
+const openSansCondensed = localFont({
+  src: [
+    {
+      path: "./fonts/OpenSans_Condensed-Regular.ttf",
+      weight: "400", // or 'normal'
+      style: "normal",
+    },
+  ],
+  variable: "--font-open-sans-condensed",
+  display: "swap",
 });
 
 const miroslav = localFont({
@@ -14,11 +38,6 @@ const miroslav = localFont({
     {
       path: "./fonts/MiroslavRegular.ttf",
       weight: "400", // or 'normal'
-      style: "normal",
-    },
-    {
-      path: "./fonts/MiroslavBold.ttf",
-      weight: "700", // or 'bold'
       style: "normal",
     },
   ],
@@ -37,9 +56,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <html lang="ru" className={miroslav.className}>
     <html lang="ru">
-      <body className={`${openSans.variable} ${miroslav.variable} antialiased`}>
+      <body
+        className={`${openSans.variable} ${openSansCondensed.variable} ${miroslav.variable} antialiased`}
+      >
         {children}
       </body>
     </html>
