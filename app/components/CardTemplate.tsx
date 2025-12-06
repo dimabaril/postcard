@@ -60,7 +60,6 @@ export function CardTemplate({
             mode,
             "text-[#D37F9A] uppercase pt-3 pb-4 flex flex-col items-center w-full",
           )}
-          style={miroslavStyle}
         >
           {toName && (
             <div
