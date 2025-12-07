@@ -1,10 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { images } from "../data";
-import { ImagePicker } from "../_components/ImagePicker";
-import { NextButton } from "../_components/NextButton";
-import { StepLayout } from "../_components/StepLayout";
-import { useCard } from "../CardContext";
+import { images } from "@/app/data";
+import { ImagePicker } from "@/app/_components/ImagePicker";
+import { NextButton } from "@/app/_components/NextButton";
+import { StepLayout } from "@/app/_components/StepLayout";
+import { useCard } from "@/app/CardContext";
 
 export default function SelectCard() {
   const router = useRouter();

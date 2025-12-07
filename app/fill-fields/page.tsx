@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { holidays } from "../data";
-import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "../constants";
-import { HolidaySelect } from "../_components/HolidaySelect";
-import { LimitHint } from "../_components/LimitHint";
-import { NameInput } from "../_components/NameInput";
-import { NextButton } from "../_components/NextButton";
-import { StepLayout } from "../_components/StepLayout";
+import { holidays } from "@/app/data";
+import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "@/app/constants";
+import { HolidaySelect } from "@/app/_components/HolidaySelect";
+import { LimitHint } from "@/app/_components/LimitHint";
+import { NameInput } from "@/app/_components/NameInput";
+import { NextButton } from "@/app/_components/NextButton";
+import { StepLayout } from "@/app/_components/StepLayout";
 import { useRouter } from "next/navigation";
-import { useCard } from "../CardContext";
+import { useCard } from "@/app/CardContext";
 
 export default function FillFields() {
   const router = useRouter();

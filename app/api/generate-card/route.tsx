@@ -1,4 +1,3 @@
-import React from "react";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import * as fs from "fs/promises";
@@ -72,7 +71,7 @@ export async function GET(req: NextRequest) {
     // Используем ImageResponse для генерации изображения на сервере
     return new ImageResponse(card, {
       width: imageWidth,
-      // height: cardHeight,
+      height: cardHeight,
       headers: {
         "cache-control": "no-store",
       },
