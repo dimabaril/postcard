@@ -37,7 +37,7 @@ export default function FillFields() {
         </>
       }
     >
-      <div className="w-full aspect-square border-4 border-white rounded-lg overflow-hidden relative bg-black/20">
+      <div className="w-full aspect-square border-2 border-white rounded-lg overflow-hidden relative bg-black/20">
         {data.selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}

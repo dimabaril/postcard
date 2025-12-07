@@ -20,9 +20,9 @@ export function ImagePicker({ images, selected, onSelect }: ImagePickerProps) {
         <div
           key={idx}
           onClick={() => onSelect(img.cardImage)}
-          className={`cursor-pointer rounded-xl overflow-hidden border-4 transition-all relative ${
+          className={`cursor-pointer rounded-xl overflow-hidden border-2 transition-all relative ${
             selected === img.cardImage
-              ? "border-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
+              ? "border-white shadow-[0_0_20px_rgba(255,255,255,1)]"
               : "border-transparent"
           }`}
         >
