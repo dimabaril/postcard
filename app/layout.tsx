@@ -59,10 +59,10 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body
-        className={`${openSans.variable} ${openSansCondensed.variable} ${miroslav.variable} antialiased`}
+        className={`${openSans.variable} ${openSansCondensed.variable} ${miroslav.variable} bg-[#22386F] antialiased`}
       >
         <CardProvider>
-          <main className="min-h-dvh bg-[#22386F] px-6 py-6">{children}</main>
+          <main className="min-h-dvh px-6 py-6">{children}</main>
         </CardProvider>
       </body>
     </html>
