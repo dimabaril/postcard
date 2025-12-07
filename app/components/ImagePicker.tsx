@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 interface ImageItem {
-  main: string;
-  preview: string;
+  cardImage: string;
+  previewImage: string;
 }
 
 interface ImagePickerProps {
@@ -17,15 +17,15 @@ export function ImagePicker({ images, selected, onSelect }: ImagePickerProps) {
       {images.map((img, idx) => (
         <div
           key={idx}
-          onClick={() => onSelect(img.main)}
+          onClick={() => onSelect(img.cardImage)}
           className={`cursor-pointer rounded-xl overflow-hidden border-4 transition-all relative ${
-            selected === img.main
+            selected === img.cardImage
               ? "border-white shadow-[0_0_15px_rgba(255,255,255,0.7)]"
               : "border-transparent"
           }`}
         >
           <Image
-            src={img.preview}
+            src={img.previewImage}
             alt="choice"
             width={100}
             height={100}

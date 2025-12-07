@@ -1,3 +1,4 @@
+import { CardProvider } from "./CardContext";
 import type { Metadata } from "next";
 // import { Open_Sans } from "next/font/google";
 import localFont from "next/font/local";
@@ -60,7 +61,9 @@ export default function RootLayout({
       <body
         className={`${openSans.variable} ${openSansCondensed.variable} ${miroslav.variable} antialiased`}
       >
-        {children}
+        <CardProvider>
+          <main className="min-h-dvh bg-[#22386F] px-6 py-6">{children}</main>
+        </CardProvider>
       </body>
     </html>
   );
