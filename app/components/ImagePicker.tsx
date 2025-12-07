@@ -1,4 +1,6 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface ImageItem {
   cardImage: string;
@@ -24,13 +26,20 @@ export function ImagePicker({ images, selected, onSelect }: ImagePickerProps) {
               : "border-transparent"
           }`}
         >
-          <Image
-            src={img.previewImage}
-            alt="choice"
-            width={100}
-            height={100}
-            className="object-cover w-full h-full"
-          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            style={{ width: "100%", height: "100%" }}
+          >
+            <Image
+              src={img.previewImage}
+              alt="choice"
+              width={100}
+              height={100}
+              className="object-cover w-full h-full"
+            />
+          </motion.div>
         </div>
       ))}
     </div>
