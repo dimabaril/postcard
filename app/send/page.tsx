@@ -82,18 +82,24 @@ export default function Send() {
         URL.revokeObjectURL(link.href);
       }
     } catch (err) {
-      console.error("Ошибка при генерации или отправке открытки:", err);
-      if (err instanceof DOMException && err.name === "AbortError") {
-        alert(
-          "Запрос создания открытки отменен по таймауту. Попробуйте снова.",
-        );
+      if (
+        err instanceof DOMException &&
+        err.name === "AbortError" &&
+        !controller.signal.aborted
+      ) {
+        // User closed the share sheet; treat as a no-op.
         return;
       }
-      const message =
-        err instanceof Error && err.message
-          ? err.message
-          : "Не удалось создать открытку. Попробуйте еще раз.";
-      alert(message);
+      console.error("Ошибка при генерации или отправке открытки:", err);
+      const message = (() => {
+        if (err instanceof DOMException && err.name === "AbortError") {
+          return "Запрос создания открытки отменен по таймауту. Попробуйте снова.";
+        }
+        if (err instanceof Error && err.message) return err.message;
+        return "Не удалось создать открытку. Попробуйте еще раз.";
+      })();
+
+      if (message) alert(message);
     } finally {
       clearTimeout(timeout);
       setIsGenerating(false);
