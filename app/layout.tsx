@@ -13,7 +13,7 @@ import "./globals.css";
 const openSans = localFont({
   src: [
     {
-      path: "./fonts/OpenSans-Regular.ttf",
+      path: "./_fonts/OpenSans-Regular.ttf",
       weight: "400", // or 'normal'
       style: "normal",
     },
@@ -25,7 +25,7 @@ const openSans = localFont({
 const openSansCondensed = localFont({
   src: [
     {
-      path: "./fonts/OpenSans_Condensed-Regular.ttf",
+      path: "./_fonts/OpenSans_Condensed-Regular.ttf",
       weight: "400", // or 'normal'
       style: "normal",
     },
@@ -37,7 +37,7 @@ const openSansCondensed = localFont({
 const miroslav = localFont({
   src: [
     {
-      path: "./fonts/MiroslavRegular.ttf",
+      path: "./_fonts/MiroslavRegular.ttf",
       weight: "400", // or 'normal'
       style: "normal",
     },

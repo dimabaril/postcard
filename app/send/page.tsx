@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { CardPreview } from "../../components/CardPreview";
-import { ShareButton } from "../../components/ShareButton";
-import { StepLayout } from "../../components/StepLayout";
-import { useCard } from "../../CardContext";
-import { holidays } from "../../data";
+import { CardPreview } from "../_components/CardPreview";
+import { ShareButton } from "../_components/ShareButton";
+import { StepLayout } from "../_components/StepLayout";
+import { useCard } from "../CardContext";
+import { holidays } from "../data";
 
 function getFinalHolidayText(
   selectedHolidayId: number,

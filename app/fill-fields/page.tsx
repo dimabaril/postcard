@@ -1,19 +1,22 @@
 "use client";
 import { useEffect } from "react";
 import Image from "next/image";
-import { holidays } from "../../data";
-import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "../../constants";
-import { HolidaySelect } from "../../components/HolidaySelect";
-import { LimitHint } from "../../components/LimitHint";
-import { NameInput } from "../../components/NameInput";
-import { NextButton } from "../../components/NextButton";
-import { StepLayout } from "../../components/StepLayout";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { holidays } from "../data";
+import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "../constants";
+import { HolidaySelect } from "../_components/HolidaySelect";
+import { LimitHint } from "../_components/LimitHint";
+import { NameInput } from "../_components/NameInput";
+import { NextButton } from "../_components/NextButton";
+import { StepLayout } from "../_components/StepLayout";
 import { useRouter } from "next/navigation";
-import { useCard } from "../../CardContext";
+import { useCard } from "../CardContext";
 
 export default function FillFields() {
   const router = useRouter();
   const { data, setData } = useCard();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (!data.selectedImage) {
@@ -36,13 +39,21 @@ export default function FillFields() {
     >
       <div className="w-full aspect-square border-4 border-white rounded-lg overflow-hidden relative bg-black/20">
         {data.selectedImage && (
-          <Image
-            src={data.selectedImage}
-            width={400}
-            height={400}
-            className="w-full h-full object-cover"
-            alt="selected"
-          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: loaded ? 1 : 0 }}
+            transition={{ duration: 1 }}
+            className="w-full h-full"
+          >
+            <Image
+              src={data.selectedImage}
+              width={400}
+              height={400}
+              className="w-full h-full object-cover"
+              alt="selected"
+              onLoadingComplete={() => setLoaded(true)}
+            />
+          </motion.div>
         )}
       </div>
       <div className="w-full flex flex-col gap-4">

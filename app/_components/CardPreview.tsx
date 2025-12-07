@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { CARD_IMAGE_CLASS, CardTemplate } from "./CardTemplate";
 
 interface CardPreviewProps {
@@ -16,6 +17,7 @@ export function CardPreview({
   fromName,
   holidayText,
 }: CardPreviewProps) {
+  const [loaded, setLoaded] = useState(false);
   return (
     <CardTemplate
       mode="web"
@@ -23,9 +25,9 @@ export function CardPreview({
         imageUrl ? (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7 }}
-            style={{ width: "100%", height: "100%" }}
+            animate={{ opacity: loaded ? 1 : 0 }}
+            transition={{ duration: 1 }}
+            className="w-full h-full"
           >
             <Image
               src={imageUrl}
@@ -34,6 +36,7 @@ export function CardPreview({
               className={CARD_IMAGE_CLASS}
               alt="final"
               priority
+              onLoadingComplete={() => setLoaded(true)}
             />
           </motion.div>
         ) : undefined
