@@ -1,15 +1,15 @@
 "use client";
 import { useEffect } from "react";
 import Image from "next/image";
-import { holidays } from "../data";
-import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "../constants";
-import { HolidaySelect } from "../components/HolidaySelect";
-import { LimitHint } from "../components/LimitHint";
-import { NameInput } from "../components/NameInput";
-import { NextButton } from "../components/NextButton";
-import { StepLayout } from "../components/StepLayout";
+import { holidays } from "../../data";
+import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "../../constants";
+import { HolidaySelect } from "../../components/HolidaySelect";
+import { LimitHint } from "../../components/LimitHint";
+import { NameInput } from "../../components/NameInput";
+import { NextButton } from "../../components/NextButton";
+import { StepLayout } from "../../components/StepLayout";
 import { useRouter } from "next/navigation";
-import { useCard } from "../CardContext";
+import { useCard } from "../../CardContext";
 
 export default function FillFields() {
   const router = useRouter();
