@@ -1,3 +1,5 @@
+export const CUSTOM_HOLIDAY_ID = 100;
+
 export const holidays = [
   { id: 1, label: "С Рождеством!" },
   { id: 2, label: "С Днем российской науки!" },
@@ -24,57 +26,57 @@ export const holidays = [
   { id: 23, label: "С Днем энергетика!" },
   { id: 24, label: "С Новым Годом!" },
 
-  { id: 100, label: "Свой вариант" },
+  { id: CUSTOM_HOLIDAY_ID, label: "Свой вариант" },
 ];
 
 // Здесь должны быть пути к вашим 12 картинкам в папке public/images
 export const images = [
   {
-    main: "/images/rtu_2026_digital_cards-01.jpg",
-    preview: "/images/1.png",
+    cardImage: "/images/rtu_2026_digital_cards-01.jpg",
+    previewImage: "/images/1.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-02.jpg",
-    preview: "/images/2.png",
+    cardImage: "/images/rtu_2026_digital_cards-02.jpg",
+    previewImage: "/images/2.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-03.jpg",
-    preview: "/images/3.png",
+    cardImage: "/images/rtu_2026_digital_cards-03.jpg",
+    previewImage: "/images/3.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-04.jpg",
-    preview: "/images/4.png",
+    cardImage: "/images/rtu_2026_digital_cards-04.jpg",
+    previewImage: "/images/4.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-05.jpg",
-    preview: "/images/5.png",
+    cardImage: "/images/rtu_2026_digital_cards-05.jpg",
+    previewImage: "/images/5.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-06.jpg",
-    preview: "/images/6.png",
+    cardImage: "/images/rtu_2026_digital_cards-06.jpg",
+    previewImage: "/images/6.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-07.jpg",
-    preview: "/images/7.png",
+    cardImage: "/images/rtu_2026_digital_cards-07.jpg",
+    previewImage: "/images/7.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-08.jpg",
-    preview: "/images/8.png",
+    cardImage: "/images/rtu_2026_digital_cards-08.jpg",
+    previewImage: "/images/8.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-09.jpg",
-    preview: "/images/9.png",
+    cardImage: "/images/rtu_2026_digital_cards-09.jpg",
+    previewImage: "/images/9.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-10.jpg",
-    preview: "/images/10.png",
+    cardImage: "/images/rtu_2026_digital_cards-10.jpg",
+    previewImage: "/images/10.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-11.jpg",
-    preview: "/images/11.png",
+    cardImage: "/images/rtu_2026_digital_cards-11.jpg",
+    previewImage: "/images/11.png",
   },
   {
-    main: "/images/rtu_2026_digital_cards-12.jpg",
-    preview: "/images/12.png",
+    cardImage: "/images/rtu_2026_digital_cards-12.jpg",
+    previewImage: "/images/12.png",
   },
 ];

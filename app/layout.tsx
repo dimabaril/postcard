@@ -1,3 +1,4 @@
+import { CardProvider } from "./CardContext";
 import type { Metadata } from "next";
 // import { Open_Sans } from "next/font/google";
 import localFont from "next/font/local";
@@ -12,7 +13,7 @@ import "./globals.css";
 const openSans = localFont({
   src: [
     {
-      path: "./fonts/OpenSans-Regular.ttf",
+      path: "./_fonts/OpenSans-Regular.ttf",
       weight: "400", // or 'normal'
       style: "normal",
     },
@@ -24,7 +25,7 @@ const openSans = localFont({
 const openSansCondensed = localFont({
   src: [
     {
-      path: "./fonts/OpenSans_Condensed-Regular.ttf",
+      path: "./_fonts/OpenSans_Condensed-Regular.ttf",
       weight: "400", // or 'normal'
       style: "normal",
     },
@@ -36,7 +37,7 @@ const openSansCondensed = localFont({
 const miroslav = localFont({
   src: [
     {
-      path: "./fonts/MiroslavRegular.ttf",
+      path: "./_fonts/MiroslavRegular.ttf",
       weight: "400", // or 'normal'
       style: "normal",
     },
@@ -58,9 +59,11 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body
-        className={`${openSans.variable} ${openSansCondensed.variable} ${miroslav.variable} antialiased`}
+        className={`${openSans.variable} ${openSansCondensed.variable} ${miroslav.variable} bg-[#22386F] antialiased`}
       >
-        {children}
+        <CardProvider>
+          <main className="min-h-dvh px-6 py-6">{children}</main>
+        </CardProvider>
       </body>
     </html>
   );

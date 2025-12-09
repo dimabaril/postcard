@@ -1,16 +1,15 @@
-import React from "react";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import * as fs from "fs/promises";
 import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "../../constants";
-import { CardTemplate, CARD_IMAGE_CLASS } from "../../components/CardTemplate";
+import { CardTemplate, CARD_IMAGE_CLASS } from "../../_components/CardTemplate";
 
 // Cache fonts between invocations to avoid reading from disk on every request
 const miroslavFontPromise = fs.readFile(
-  new URL("../../fonts/MiroslavRegular.ttf", import.meta.url),
+  new URL("../../_fonts/MiroslavRegular.ttf", import.meta.url),
 );
 const openSansFontPromise = fs.readFile(
-  new URL("../../fonts/OpenSans-Regular.ttf", import.meta.url),
+  new URL("../../_fonts/OpenSans-Regular.ttf", import.meta.url),
 );
 
 export async function GET(req: NextRequest) {
