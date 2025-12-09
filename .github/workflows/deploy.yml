@@ -25,4 +25,4 @@ jobs:
 
             npm run build
 
-            pm2 reload next-app --update-env
+            pm2 reload nextjs-app --update-env
