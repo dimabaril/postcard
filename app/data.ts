@@ -1,3 +1,5 @@
+export const CUSTOM_HOLIDAY_ID = 100;
+
 export const holidays = [
   { id: 1, label: "С Рождеством!" },
   { id: 2, label: "С Днем российской науки!" },
@@ -24,7 +26,7 @@ export const holidays = [
   { id: 23, label: "С Днем энергетика!" },
   { id: 24, label: "С Новым Годом!" },
 
-  { id: 100, label: "Свой вариант" },
+  { id: CUSTOM_HOLIDAY_ID, label: "Свой вариант" },
 ];
 
 // Здесь должны быть пути к вашим 12 картинкам в папке public/images

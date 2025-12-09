@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { holidays } from "@/app/data";
+import { holidays, CUSTOM_HOLIDAY_ID } from "@/app/data";
 import { MAX_HOLIDAY_LENGTH, MAX_NAME_LENGTH } from "@/app/constants";
 import { HolidaySelect } from "@/app/_components/HolidaySelect";
 import { LimitHint } from "@/app/_components/LimitHint";
@@ -62,7 +62,7 @@ export default function FillFields() {
           options={holidays}
           onChange={handleHolidayChange}
         />
-        {data.selectedHolidayId === 100 && (
+        {data.selectedHolidayId === CUSTOM_HOLIDAY_ID && (
           <div className="w-full relative">
             <input
               type="text"
