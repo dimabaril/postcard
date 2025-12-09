@@ -21,6 +21,10 @@ export default function Send() {
   const { data } = useCard();
   const [isGenerating, setIsGenerating] = useState(false);
 
+  // Trim spaces for preview and sending
+  const trimmedToName = data.toName?.trim() || "";
+  const trimmedFromName = data.fromName?.trim() || "";
+
   const finalHoliday = getFinalHolidayText(
     data.selectedHolidayId,
     data.customHolidayText,
@@ -47,8 +51,8 @@ export default function Send() {
     try {
       const params = new URLSearchParams();
       params.set("imageUrl", data.selectedImage);
-      if (data.toName) params.set("toName", data.toName);
-      if (data.fromName) params.set("fromName", data.fromName);
+      if (trimmedToName) params.set("toName", trimmedToName);
+      if (trimmedFromName) params.set("fromName", trimmedFromName);
       if (finalHoliday) params.set("holidayText", finalHoliday);
       const response = await fetch(`/api/generate-card?${params}`, {
         cache: "no-store",
@@ -116,8 +120,8 @@ export default function Send() {
     >
       <CardPreview
         imageUrl={data.selectedImage}
-        toName={data.toName}
-        fromName={data.fromName}
+        toName={trimmedToName}
+        fromName={trimmedFromName}
         holidayText={finalHoliday}
       />
       <ShareButton
